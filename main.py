@@ -61,7 +61,9 @@ class IceCreamWindow(QWidget):
         # temporary graph - TODO (your code): replace it with the real graph
         self.ax.clear()                             # remove the previous graph before drawing a new one
         self.ax.scatter(self.temperatures, self.revenues, s= 1)
-        self.ax.set_title("Temporary graph")
+        self.ax.set_title("Ice Cream Revenue vs. Temperature")
+        self.ax.set_ylabel('Revenue ($)')
+        self.ax.set_xlabel('Temperature (°)')
         self.canvas.draw()                          # without this line the window is not refreshed
 
         # TODO (your code), inside this method:
