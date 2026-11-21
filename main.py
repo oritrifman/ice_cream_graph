@@ -60,7 +60,7 @@ class IceCreamWindow(QWidget):
     def draw_graph(self):
         # temporary graph - TODO (your code): replace it with the real graph
         self.ax.clear()                             # remove the previous graph before drawing a new one
-        self.ax.plot([0, 1, 2, 3, 4], [0, 1, 4, 9, 16])
+        self.ax.scatter(self.temperatures, self.revenues, s= 1)
         self.ax.set_title("Temporary graph")
         self.canvas.draw()                          # without this line the window is not refreshed
 
@@ -83,7 +83,7 @@ class IceCreamWindow(QWidget):
                 temp, revenue = line.strip().split(',')
                 self.temperatures.append(float(temp))
                 self.revenues.append(float(revenue))
-        # 3. call self.draw_graph()
+        self.draw_graph()
 
     def about_clicked(self):
         self.about_window.show()
