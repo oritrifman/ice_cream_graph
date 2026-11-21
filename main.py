@@ -3,9 +3,8 @@ from PySide6.QtWidgets import (QApplication, QWidget, QLabel, QPushButton, QFile
 # matplotlib parts that let a graph live inside a PySide6 window
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
-# TODO (your code): import numpy as np
+import numpy as np
 from About import About
-
 
 class IceCreamWindow(QWidget):
 
@@ -55,24 +54,21 @@ class IceCreamWindow(QWidget):
         # step 3: give the main layout to the window
         self.setLayout(main_layout)
 
-        self.draw_graph()                           # shows the temporary graph at start
-
     def draw_graph(self):
-        # temporary graph - TODO (your code): replace it with the real graph
         self.ax.clear()                             # remove the previous graph before drawing a new one
-        self.ax.scatter(self.temperatures, self.revenues, s= 1)
+        self.ax.scatter(self.temperatures, self.revenues, s=1)
         self.ax.spines['top'].set_visible(False)
         self.ax.spines['right'].set_visible(False)
         self.ax.set_title("Ice Cream Revenue vs. Temperature")
         self.ax.set_ylabel('Revenue ($)')
-        self.ax.set_xlabel('Temperature (°)')
-        self.canvas.draw()                          # without this line the window is not refreshed
+        self.ax.set_xlabel('Temperature (°C)')
+        slope, intercept = np.polyfit(self.temperatures, self.revenues, 1)
 
-        # TODO (your code), inside this method:
-        # - scatter with point size 1: temperature on the X axis, revenue on the Y axis
-        # - remove the top and right lines of the frame
-        # - a correct title and axis titles
-        # - the trend line (np.polyfit) with its equation written on the graph
+        x_line = [min(self.temperatures), max(self.temperatures)]
+        y_line = [slope * x_line[0] + intercept, slope * x_line[1] + intercept]
+        self.ax.plot(x_line, y_line, color='red')
+        self.ax.text(0.05, 0.9, f'y = {slope:.2f}x {intercept:+.2f}', transform=self.ax.transAxes)  
+        self.canvas.draw()                          # without this line the window is not refreshed
 
     def load_clicked(self):
         # the dialog returns the chosen path (and the filter, which we don't need)
