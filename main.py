@@ -12,9 +12,8 @@ class IceCreamWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.about_window = About()   # created once, but not visible until about_clicked calls show()
-
-        # TODO (your code): define the two lists of the window here (temperatures and revenues)
-
+        self.temperatures = []
+        self.revenues = []
         self.initUI()
 
     def initUI(self):
