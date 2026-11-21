@@ -75,11 +75,14 @@ class IceCreamWindow(QWidget):
         file_name, _ = QFileDialog.getOpenFileName(self, "Select ice cream file", "", "CSV Files (*.csv)")
         if file_name == '':                         # the user closed the dialog without choosing
             return
-
-        # TODO (your code):
-        # 1. open the file for reading, skip the header line
-        # 2. for every line: append the temperature and the revenue to the two lists you defined in __init__
-        #    (tip: temperatures have decimals - use float, not int)
+        self.temperatures = []
+        self.revenues = []
+        with open(file_name, 'r') as f:
+            next(f)
+            for line in f:
+                temp, revenue = line.strip().split(',')
+                self.temperatures.append(float(temp))
+                self.revenues.append(float(revenue))
         # 3. call self.draw_graph()
 
     def about_clicked(self):
